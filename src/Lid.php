@@ -56,11 +56,13 @@ class Lid {
   public function __construct($id) {
     if(is_numeric($id)) {
       $this->number = $id;
+    } else if(is_a($id, self::class)) {
+      $this->number = $id->number();
     } else {
       $this->number = static::parse($id, $this->mode);
     }
     if($this->number === false) {
-      throw new \Exception('Not a valid IdHash');
+      throw new \Exception('Not a valid LID');
     }
   }
 
