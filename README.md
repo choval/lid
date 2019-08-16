@@ -27,20 +27,20 @@ The checksum is in the first character.
 
 ```
 NUM: 9223372036854775807
-WEB: 45FE-KXVC-3KT2-6XC7
-LID: 4aZl:8N0y:58M7
+WEB: 75FE-KXVC-3KT2-6XC7
+LID: 7aZl:8N0y:58M7
 
 NUM: 8057322199735401981
-WEB: 14V7-27T8-8CT6-54X1
-LID: 19Bc:CvJ3:BrCR
+WEB: 94V7-27T8-8CT6-54X1
+LID: 99Bc:CvJ3:BrCR
 
 NUM: 495653535173419733
-WEB: 8061-03H6-471H-T96H
-LID: 80AC:66ri:lnk9
+WEB: 9061-03H6-471H-T96H
+LID: 90AC:66ri:lnk9
 
 NUM: 21398
-WEB: 3000-0000-0000-2H9V
-LID: 3000:0000:05z8
+WEB: 1000-0000-0000-2H9V
+LID: 1000:0000:05z8
 ```
 
 
@@ -84,31 +84,31 @@ X - xray
  */
 $lid = new Lid( 21398 );
 echo $lid->id();
-// 3000:0000:05z8
+// 1000:0000:05z8
 echo $lid->web();
-// 3000-0000-0000-2H9V
+// 1000-0000-0000-2H9V
 echo $lid->number();
 // 21398
 
 /**
  * The constructor accepts an int, a LID or a Web LID
  */
-$lid = new Lid( '3000-0000-0000-2H9V' );
+$lid = new Lid( '1000-0000-0000-2H9V' );
 echo $lid->id();
-// 3000:0000:05z8
+// 1000:0000:05z8
 echo $lid->web();
-// 3000-0000-0000-2H9V
+// 1000-0000-0000-2H9V
 echo $lid->number();
 // 21398
 
 /**
  * Notice how we pass characters not in the base.
  */
-$lid = new Lid( '3ooo-oOoo-ooo0-zHqU' );
+$lid = new Lid( '1ooo-oOoo-ooo0-zHqU' );
 echo $lid->id();
-// 3000:0000:05z8
+// 1000:0000:05z8
 echo $lid->web();
-// 3000-0000-0000-2H9V
+// 1000-0000-0000-2H9V
 echo $lid->number();
 // 21398
 ```

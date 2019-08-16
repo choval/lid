@@ -1,20 +1,20 @@
 #!/usr/bin/env php
 <?php
-require(__DIR__.'/../src/Hid.php');
+require(dirname(__DIR__).'/vendor/autoload.php');
 
 if(!isset($argv[1])) {
   echo "Pass an ID\n";
   exit(1);
 }
 
-$obj = new Choval\HID($argv[1]);
+$obj = new Choval\LID($argv[1]);
 $number = $obj->number();
-$hid = $obj->hid();
-$url = $obj->url();
+$id = $obj->id();
+$web = $obj->web();
 echo "
- NUMBER: $number
-    HID: $hid
-URL HID: $url
+NUM: $number
+WEB: $web
+LID: $id
 
 ";
 
