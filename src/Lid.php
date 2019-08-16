@@ -1,6 +1,10 @@
 <?php
 namespace Choval;
 
+use function Choval\base_convert;
+use function Choval\damm_digit;
+use function Choval\damm_valid;
+
 class Lid {
 
 
@@ -98,7 +102,7 @@ class Lid {
   /**
    * Alias of id
    */
-  public function hid() {
+  public function lid() {
     return $this->id();
   }
 
@@ -120,7 +124,7 @@ class Lid {
     if(is_null($mode)) {
       $mode = static::MODE_BASE;
     }
-    $checksum = static::checksum($id);
+    $checkdigit = damm_digit($id);
     switch($mode) {
       case static::MODE_BASE:
         $max = 11;
@@ -138,10 +142,10 @@ class Lid {
     $s = static::toBase($id, $base);
     $s = str_pad($s, $max, '0', STR_PAD_LEFT);
     if($mode == static::MODE_BASE) {
-      $s = $checksum.$s;
+      $s = $checkdigit.$s;
     } else {
       $i = substr($s, 0, 1);
-      $s = $checksum.substr($s, 1);
+      $s = $checkdigit.substr($s, 1);
     }
     $s = implode($sep, str_split($s, 4));
     return $s;
@@ -175,32 +179,21 @@ class Lid {
       }
     }
     $id = str_replace(['-',':'],'',$id);
-    $checksum = false;
     $number = false;
-    switch($mode) {
-      case static::MODE_BASE:
-        $checksum = substr($id, 0, 1);
-        $id = substr($id, 1); 
-        $number = static::toInt($id, static::$id_base);
-        $check = static::checksum($number);
-        if($check != $checksum) {
-          return false;
-        }
-        break;
-      case static::MODE_WEB:
-        foreach(static::$web_alias as $k=>$vs) {
-          $id = str_replace($vs, $k, $id);
-        }
-        $checksum = substr($id, 0, 1);
-        $id = substr($id, 1);
-        $number = static::toInt($id, static::$web_base);
-        $check = static::checksum($number);
-        if($check != $checksum) {
-          return false;
-        }
-        break;
+    $base = static::$id_base;
+    if($mode == static::MODE_WEB) {
+      foreach(static::$web_alias as $k=>$vs) {
+        $id = str_replace($vs, $k, $id);
+      }
+      $base = static::$web_base;
     }
-    return $number;
+    $checkdigit = substr($id, 0, 1);
+    $id = substr($id, 1); 
+    $number = static::toInt($id, $base);
+    if( damm_valid($number, $checkdigit) ) {
+      return $number;
+    }
+    return false;
   }
 
 
@@ -208,8 +201,8 @@ class Lid {
   /**
    * Convert to base
    */
-  public static function toBase(int $number, string $base) : string {
-    return static::convBase($number, '0123456789', $base);
+  protected static function toBase(int $number, string $base) : string {
+    return base_convert($number, 10, $base);
   }
 
 
@@ -217,77 +210,12 @@ class Lid {
   /**
    * Convert to int
    */
-  public static function toInt(string $id, string $base) {
-    return static::convBase($id, $base, '0123456789');
-  }
-
-
-
-  /**
-   * Implemented from https://github.com/tdely/luhn-php/blob/master/src/Luhn.php
-   */
-  protected static function algorithm(int $number) : int {
-    $sum = 0;
-    $parity = 1;
-    $raw = (string)$number;
-    $len = strlen($raw);
-    for($i=$len-1;$i>=0;$i--) {
-      $factor = $parity ? 2: 1;
-      $parity = !$parity;
-      $sum += array_sum(str_split($raw[$i] * $factor));
-    }
-    return $sum;
-  }
-
-
-
-  /**
-   * Implemented from https://github.com/tdely/luhn-php/blob/master/src/Luhn.php
-   */
-  public static function checksum(int $number) : int {
-    return ((static::algorithm($number) * 9) % 10);
-  }
-
-
-
-
-  /**
-   * From https://gist.github.com/macik/4758146
-   */
-  public static function convBase($numberInput, $fromBaseInput, $toBaseInput)
-  {
-    if($fromBaseInput == $toBaseInput) {
-      return $numberInput;
-    }
-    $fromBase = str_split($fromBaseInput,1);
-    $toBase = str_split($toBaseInput,1);
-    $number = str_split($numberInput,1);
-    $fromLen=strlen($fromBaseInput);
-    $toLen=strlen($toBaseInput);
-    $numberLen=strlen($numberInput);
-    $retval='';
-    if($toBaseInput == '0123456789') {
-      $retval=0;
-      for($i = 1;$i <= $numberLen; $i++) {
-        $retval = bcadd($retval, bcmul(array_search($number[$i-1], $fromBase),bcpow($fromLen,$numberLen-$i)));
-      }
-      return $retval;
-    }
-    if($fromBaseInput != '0123456789') {
-      $base10=convBase($numberInput, $fromBaseInput, '0123456789');
-    } else {
-      $base10 = $numberInput;
-    }
-    if($base10<strlen($toBaseInput)) {
-      return $toBase[$base10];
-    }
-    while($base10 != '0') {
-      $retval = $toBase[bcmod($base10,$toLen)].$retval;
-      $base10 = bcdiv($base10,$toLen,0);
-    }
-    return $retval;
+  protected static function toInt(string $id, string $base) {
+    return base_convert($id, $base, 10);
   }
 
 
 
 }
+
+

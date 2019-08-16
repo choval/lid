@@ -4,8 +4,87 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db38389667346577e515fd9b19eaf2be",
-    "packages": [],
+    "content-hash": "3b9b3b5a5c7decdc39cc3ac47bf54677",
+    "packages": [
+        {
+            "name": "choval/base_convert",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/choval/base_convert.git",
+                "reference": "1c7e9b14eadf7ff4142cced51664f3f0bc9f402c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/choval/base_convert/zipball/1c7e9b14eadf7ff4142cced51664f3f0bc9f402c",
+                "reference": "1c7e9b14eadf7ff4142cced51664f3f0bc9f402c",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Choval\\": "src/"
+                },
+                "files": [
+                    "src/function.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Osvaldo Jiang",
+                    "email": "osvaldo@publitar.com"
+                }
+            ],
+            "description": "A base convert functino for converting extra large numbers from one base to another",
+            "time": "2019-08-15T23:37:50+00:00"
+        },
+        {
+            "name": "choval/damm",
+            "version": "v0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/choval/damm.git",
+                "reference": "27f7a5e1f7d93340fbb3924a962408f8792ec419"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/choval/damm/zipball/27f7a5e1f7d93340fbb3924a962408f8792ec419",
+                "reference": "27f7a5e1f7d93340fbb3924a962408f8792ec419",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Choval\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Osvaldo Jiang",
+                    "email": "osvaldo@publitar.com"
+                }
+            ],
+            "description": "Damm algorithm functions, a check digit algorithm that detects single-digit errors and adjacent transposition errors",
+            "time": "2019-08-16T04:29:29+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
