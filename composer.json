@@ -10,15 +10,16 @@
         }
     ],
     "autoload": {
-      "psr-4": {
-        "Choval\\": "src/"
-      }
+        "psr-4": {
+            "Choval\\": "src/"
+        }
     },
     "require": {
         "choval/base_convert": "^0.1.1",
         "choval/damm": "^0.1.0"
     },
     "require-dev": {
-      "phpunit/phpunit": "^7"
+        "symplify/easy-coding-standard": "^7.0",
+        "phpunit/phpunit": "^8"
     }
 }
