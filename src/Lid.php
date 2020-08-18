@@ -242,7 +242,6 @@ class Lid
         if (damm_valid($number, $checkdigit)) {
             return $number;
         }
-        var_dump($id, $number, $checkdigit);
         return false;
     }
 
